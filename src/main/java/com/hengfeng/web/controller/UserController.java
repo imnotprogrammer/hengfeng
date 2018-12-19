@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hengfeng.web.service.UserService;
 import com.hengfeng.web.table.User;
+import com.hengfeng.web.utils.ApiResponse;
 
 @Controller
 public class UserController {
@@ -17,11 +18,10 @@ public class UserController {
 	
 	@RequestMapping("/user")
 	@ResponseBody
-	public User home()
+	public ApiResponse home()
 	{
 		User user = userService.selectById(1);
-		System.out.print(user.toString());
-		return user;
+		return ApiResponse.createResponse(user);
 	}
 	
 	@RequestMapping("/user/update")
