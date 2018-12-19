@@ -6,30 +6,47 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.hengfeng.web.utils.ErrorBusinessEnum;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hengfeng.web.utils.ApiResponse;
 import com.hengfeng.web.utils.BusinessException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * 鍩虹鍏叡绫�
- * @author Administrator
+ * 基础控制器类
+ * @author yuguo.lan
  *
  */
 public class BaseController {
-	protected ApiResponse response;
+
+	/**
+	 * 捕获全局异常，并返回统一值
+	 * @param request
+	 * @param e
+	 * @return
+	 * @throws Exception
+	 */
 	@ExceptionHandler(value = Exception.class)//指定拦截的异常
+	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public ApiResponse exceptionHandler(HttpServletRequest request, HttpServletResponse response,Exception e) throws Exception
+	public ApiResponse exceptionHandler(HttpServletRequest request, Exception e) throws Exception
 	{
+		Map<String, Object> map = new HashMap<>();
+		ApiResponse response = new ApiResponse();
 		if (e instanceof BusinessException) {
-			
+			BusinessException be = (BusinessException) e;
+			map.put("errCode", be.getErrCode());
+			map.put("errMsg", be.getErrMsg());
+			response.setData(map);
 		} else {
-			//this.response.setData(object);
-			
+			map.put("errCode", ErrorBusinessEnum.UNKOWN_ERROR.getErrCode());
+			map.put("errMsg", ErrorBusinessEnum.UNKOWN_ERROR.getErrMsg());
+			response.setData(map);
 		}
-		return this.response;
+		return response.createResponse(map, "fail");
 	}
 
 }

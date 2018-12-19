@@ -1,23 +1,23 @@
 package com.hengfeng.web.utils;
 
 /**
- * ½Ó¿ÚÈ«¾ÖÍ³Ò»·µ»ØÀà
+ * æ¥å£å…¨å±€ç»Ÿä¸€è¿”å›ç±»
  * @author Administrator
  *
  */
 public class ApiResponse {
 	
-	//ÌáÊ¾ĞÅÏ¢
+	//æç¤ºä¿¡æ¯
 	private String message;
 	
-	//Êı¾İ
+	//æ•°æ®
 	private Object data;
 	
-	//×´Ì¬Âë ³É¹¦ok Ê§°Ü fail
+	//çŠ¶æ€ç  æˆåŠŸok å¤±è´¥ fail
 	private String status;
 	
 	/**
-	 * ´´½¨Ò»¸öapiÏìÓ¦
+	 * åˆ›å»ºä¸€ä¸ªapiå“åº”
 	 * @param object
 	 * @return
 	 */

@@ -1,6 +1,7 @@
 package com.hengfeng.web.table;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * user
@@ -9,21 +10,17 @@ import java.io.Serializable;
 public class User implements Serializable {
     private Integer id;
 
-    private String username;
-
-    private String auth_key;
-
-    private String password_hash;
-
-    private String password_reset_token;
+    private String name;
 
     private String email;
 
-    private Short status;
+    private String password;
 
-    private Integer created_at;
+    private String remember_token;
 
-    private Integer updated_at;
+    private Date created_at;
+
+    private Date updated_at;
 
     private static final long serialVersionUID = 1L;
 
@@ -35,36 +32,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getAuth_key() {
-        return auth_key;
-    }
-
-    public void setAuth_key(String auth_key) {
-        this.auth_key = auth_key;
-    }
-
-    public String getPassword_hash() {
-        return password_hash;
-    }
-
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
-    }
-
-    public String getPassword_reset_token() {
-        return password_reset_token;
-    }
-
-    public void setPassword_reset_token(String password_reset_token) {
-        this.password_reset_token = password_reset_token;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -75,27 +48,35 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Short getStatus() {
-        return status;
+    public String getPassword() {
+        return password;
     }
 
-    public void setStatus(Short status) {
-        this.status = status;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Integer getCreated_at() {
+    public String getRemember_token() {
+        return remember_token;
+    }
+
+    public void setRemember_token(String remember_token) {
+        this.remember_token = remember_token;
+    }
+
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Integer created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
-    public Integer getUpdated_at() {
+    public Date getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Integer updated_at) {
+    public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
     }
 
@@ -112,12 +93,10 @@ public class User implements Serializable {
         }
         User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-            && (this.getAuth_key() == null ? other.getAuth_key() == null : this.getAuth_key().equals(other.getAuth_key()))
-            && (this.getPassword_hash() == null ? other.getPassword_hash() == null : this.getPassword_hash().equals(other.getPassword_hash()))
-            && (this.getPassword_reset_token() == null ? other.getPassword_reset_token() == null : this.getPassword_reset_token().equals(other.getPassword_reset_token()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
+            && (this.getRemember_token() == null ? other.getRemember_token() == null : this.getRemember_token().equals(other.getRemember_token()))
             && (this.getCreated_at() == null ? other.getCreated_at() == null : this.getCreated_at().equals(other.getCreated_at()))
             && (this.getUpdated_at() == null ? other.getUpdated_at() == null : this.getUpdated_at().equals(other.getUpdated_at()));
     }
@@ -127,12 +106,10 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
-        result = prime * result + ((getAuth_key() == null) ? 0 : getAuth_key().hashCode());
-        result = prime * result + ((getPassword_hash() == null) ? 0 : getPassword_hash().hashCode());
-        result = prime * result + ((getPassword_reset_token() == null) ? 0 : getPassword_reset_token().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
+        result = prime * result + ((getRemember_token() == null) ? 0 : getRemember_token().hashCode());
         result = prime * result + ((getCreated_at() == null) ? 0 : getCreated_at().hashCode());
         result = prime * result + ((getUpdated_at() == null) ? 0 : getUpdated_at().hashCode());
         return result;
@@ -145,12 +122,10 @@ public class User implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", username=").append(username);
-        sb.append(", auth_key=").append(auth_key);
-        sb.append(", password_hash=").append(password_hash);
-        sb.append(", password_reset_token=").append(password_reset_token);
+        sb.append(", name=").append(name);
         sb.append(", email=").append(email);
-        sb.append(", status=").append(status);
+        sb.append(", password=").append(password);
+        sb.append(", remember_token=").append(remember_token);
         sb.append(", created_at=").append(created_at);
         sb.append(", updated_at=").append(updated_at);
         sb.append(", serialVersionUID=").append(serialVersionUID);

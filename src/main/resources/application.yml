@@ -1,7 +1,7 @@
 spring:
     datasource:
-        name: biaobai
-        url: jdbc:mysql://127.0.0.1:3306/biaobai?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=GMT%2B8
+        name: hengfeng
+        url: jdbc:mysql://127.0.0.1:3306/hengfeng?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=GMT%2B8
         username: root
         password: 123456
         # 使用druid数据源

@@ -1,11 +1,11 @@
 package com.hengfeng.web.service.impl;
 
+import com.hengfeng.web.dao.UserDao;
+import com.hengfeng.web.table.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hengfeng.web.dao.UserDao;
 import com.hengfeng.web.service.UserService;
-import com.hengfeng.web.table.User;
 
 @Service
 public class UserServiceImpl implements UserService {

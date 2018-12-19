@@ -1,9 +1,7 @@
 package com.hengfeng.web.dao;
 
 import com.hengfeng.web.table.User;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserDao {
     int deleteByPrimaryKey(Integer id);
 

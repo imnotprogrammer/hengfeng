@@ -1,31 +1,33 @@
 package com.hengfeng.web.utils;
 
-public class BusinessException extends Exception {
+public class BusinessException extends Exception implements CommonError{
+	private CommonError cr;
 
-	private Exception exception;
-	
-	private ApiResponse response;
-	
-	public Exception getException() {
-		return exception;
-	}
-
-	public void setException(Exception exception) {
-		this.exception = exception;
-	}
-
-	public ApiResponse getResponse() {
-		return response;
-	}
-
-	public void setResponse(ApiResponse response) {
-		this.response = response;
-	}
-
-	BusinessException(Exception ex, ApiResponse response)
+	public BusinessException(CommonError cr)
 	{
-		this.exception = ex;
-		this.response = response;
+		super();
+		this.cr = cr;
 	}
-	
+	public BusinessException(CommonError cr, String errMsg)
+	{
+		super();
+		this.cr = cr;
+		this.cr.setErrmsg(errMsg);
+	}
+
+	@Override
+	public int getErrCode() {
+		return this.cr.getErrCode();
+	}
+
+	@Override
+	public String getErrMsg() {
+		return this.cr.getErrMsg();
+	}
+
+	@Override
+	public CommonError setErrmsg(String errMsg) {
+		this.cr.setErrmsg(errMsg);
+		return this;
+	}
 }
