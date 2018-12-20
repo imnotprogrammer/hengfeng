@@ -7,8 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.hengfeng.web.utils.ErrorBusinessEnum;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hengfeng.web.utils.ApiResponse;
@@ -21,6 +27,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  */
 public class BaseController {
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+	@InitBinder
+    private void initBinder(WebDataBinder webDataBinder){
+        webDataBinder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
+    }
 
 	/**
 	 * 捕获全局异常，并返回统一值
@@ -43,7 +54,7 @@ public class BaseController {
 			response.setData(map);
 		} else {
 			map.put("errCode", ErrorBusinessEnum.UNKOWN_ERROR.getErrCode());
-			map.put("errMsg", ErrorBusinessEnum.UNKOWN_ERROR.getErrMsg());
+			map.put("errMsg", e.getMessage());
 			response.setData(map);
 		}
 		return response.createResponse(map, "fail");

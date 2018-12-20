@@ -5,7 +5,11 @@ import javax.annotation.Resource;
 import com.hengfeng.web.table.User;
 import com.hengfeng.web.utils.BusinessException;
 import com.hengfeng.web.utils.ErrorBusinessEnum;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,11 +22,13 @@ public class UserController extends BaseController{
 	@Resource
 	private UserService userService;
 	
-	@RequestMapping("/user")
+	@RequestMapping("/user/{id}")
 	@ResponseBody
-	public ApiResponse home() throws BusinessException
+	public ApiResponse show(@PathVariable("id") int id) throws BusinessException
 	{
-		User user = userService.selectById(2);
+		this.logger.debug("你查询数据");
+		this.logger.info("测试日志");
+		User user = userService.selectById(id);
 		if (user == null) {
 			throw new BusinessException(ErrorBusinessEnum.USER_NOT_EXISTS);
 		}

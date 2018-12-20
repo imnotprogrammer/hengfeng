@@ -3,6 +3,9 @@ package com.hengfeng.web.table;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
+
 /**
  * user
  * @author 
@@ -10,6 +13,7 @@ import java.util.Date;
 public class User implements Serializable {
     private Integer id;
 
+    @NotBlank(message="姓名不能为空")
     private String name;
 
     private String email;
