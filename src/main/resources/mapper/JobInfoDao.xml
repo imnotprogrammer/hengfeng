@@ -124,29 +124,28 @@
       `status` = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectList" resultType="com.hengfeng.web.table.User"
-        parameterType="com.hengfeng.web.table.JobInfo">
-        SELECT * FROM job_info
+  <select id="selectJobList" resultType="com.hengfeng.web.table.JobInfo" parameterType="com.hengfeng.web.table.JobInfo">
+        SELECT * FROM `job_info`
         <where>
            <if test="title != null">
-	        title LIKE "%"#{title,jdbcType=VARCHAR}"%",
+	        `title` LIKE "%"#{title}"%"
 	      </if>
-	      <if test="created_at != null">
-	        AND created_at like "%"#{created_at,jdbcType=TIMESTAMP}"%",
+	      <if test="start_created_at != null">
+	        <![CDATA[ AND `created_at` >= #{start_created_at} ]]>
+	      </if>
+	      <if test="end_created_at != null">
+	        <![CDATA[ AND `created_at` <= #{end_created_at} ]]>
 	      </if>
 	      <if test="unit_name != null">
-	        AND unit_name LIKE "%"#{unit_name,jdbcType=VARCHAR}"%",
+	        AND `unit_name` LIKE "%"#{unit_name}"%"
 	      </if>
 	      <if test="salary_type != null">
-	        AND salary_type = #{salary_type,jdbcType=INTEGER},
+	        AND `salary_type` = #{salary_type}
 	      </if>
 	      <if test="status != null">
-	        `status` = #{status,jdbcType=TINYINT},
-	      </if>
-	      <if test="desc != null">
-	        `desc` LIKE "%"#{desc,jdbcType=LONGVARCHAR}"%",
+	       AND `status` = #{status}
 	      </if>
         </where>
-        ORDER BY id
+        ORDER BY `id` desc
     </select>
 </mapper>

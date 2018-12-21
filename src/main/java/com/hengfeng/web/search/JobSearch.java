@@ -1,13 +1,15 @@
 package com.hengfeng.web.search;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.List;
 
 /**
  * job_info
  * @author 
  */
-public class JobSearch implements Serializable {
+public class JobSearch extends CommonSearch implements Serializable {
 
     /**
      * 标题
@@ -103,5 +105,6 @@ public class JobSearch implements Serializable {
     public void setStatus(Byte status) {
         this.status = status;
     }
-
+    
+   
 }

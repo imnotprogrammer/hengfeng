@@ -20,5 +20,5 @@ public interface JobInfoDao {
 
     int updateByPrimaryKey(JobInfo record);
     
-    List<JobInfo> selectJob(JobSearch jobSearch);
+    List<JobInfo> selectJobList(JobSearch jobSearch);
 }

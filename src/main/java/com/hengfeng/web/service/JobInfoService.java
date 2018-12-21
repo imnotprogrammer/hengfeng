@@ -8,4 +8,6 @@ import com.hengfeng.web.table.JobInfo;
 public interface JobInfoService {
 
 	public List<JobInfo> selectJobList(JobSearch jobSearch);
+	
+	public JobInfo selectJobById(Integer id);
 }
