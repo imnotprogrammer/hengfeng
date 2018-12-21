@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hengfeng.web.dao.JobInfoDao">
+  <resultMap id="BaseResultMap" type="com.hengfeng.web.table.JobInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
+    <result column="salary_type" jdbcType="INTEGER" property="salary_type" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hengfeng.web.table.JobInfo">
+    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, created_at, unit_name, salary_type, `status`
+  </sql>
+  <sql id="Blob_Column_List">
+    `desc`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from job_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hengfeng.web.table.JobInfo" useGeneratedKeys="true">
+    insert into job_info (title, created_at, unit_name, 
+      salary_type, `status`, `desc`
+      )
+    values (#{title,jdbcType=VARCHAR}, #{created_at,jdbcType=TIMESTAMP}, #{unit_name,jdbcType=VARCHAR}, 
+      #{salary_type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hengfeng.web.table.JobInfo" useGeneratedKeys="true">
+    insert into job_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="created_at != null">
+        created_at,
+      </if>
+      <if test="unit_name != null">
+        unit_name,
+      </if>
+      <if test="salary_type != null">
+        salary_type,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="desc != null">
+        `desc`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="created_at != null">
+        #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit_name != null">
+        #{unit_name,jdbcType=VARCHAR},
+      </if>
+      <if test="salary_type != null">
+        #{salary_type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hengfeng.web.table.JobInfo">
+    update job_info
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="created_at != null">
+        created_at = #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit_name != null">
+        unit_name = #{unit_name,jdbcType=VARCHAR},
+      </if>
+      <if test="salary_type != null">
+        salary_type = #{salary_type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="desc != null">
+        `desc` = #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hengfeng.web.table.JobInfo">
+    update job_info
+    set title = #{title,jdbcType=VARCHAR},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      unit_name = #{unit_name,jdbcType=VARCHAR},
+      salary_type = #{salary_type,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT},
+      `desc` = #{desc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hengfeng.web.table.JobInfo">
+    update job_info
+    set title = #{title,jdbcType=VARCHAR},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      unit_name = #{unit_name,jdbcType=VARCHAR},
+      salary_type = #{salary_type,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectList" resultType="com.hengfeng.web.table.User"
+        parameterType="com.hengfeng.web.table.JobInfo">
+        SELECT * FROM job_info
+        <where>
+           <if test="title != null">
+	        title LIKE "%"#{title,jdbcType=VARCHAR}"%",
+	      </if>
+	      <if test="created_at != null">
+	        AND created_at like "%"#{created_at,jdbcType=TIMESTAMP}"%",
+	      </if>
+	      <if test="unit_name != null">
+	        AND unit_name LIKE "%"#{unit_name,jdbcType=VARCHAR}"%",
+	      </if>
+	      <if test="salary_type != null">
+	        AND salary_type = #{salary_type,jdbcType=INTEGER},
+	      </if>
+	      <if test="status != null">
+	        `status` = #{status,jdbcType=TINYINT},
+	      </if>
+	      <if test="desc != null">
+	        `desc` LIKE "%"#{desc,jdbcType=LONGVARCHAR}"%",
+	      </if>
+        </where>
+        ORDER BY id
+    </select>
+</mapper>
