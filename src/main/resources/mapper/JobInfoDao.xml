@@ -7,13 +7,15 @@
     <result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
     <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
     <result column="salary_type" jdbcType="INTEGER" property="salary_type" />
+    <result column="degree_type" jdbcType="INTEGER" property="salary_type" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updated_at" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hengfeng.web.table.JobInfo">
     <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, created_at, unit_name, salary_type, `status`
+    id, title, created_at, unit_name, salary_type, `status`,updated_at
   </sql>
   <sql id="Blob_Column_List">
     `desc`
@@ -32,10 +34,10 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hengfeng.web.table.JobInfo" useGeneratedKeys="true">
     insert into job_info (title, created_at, unit_name, 
-      salary_type, `status`, `desc`
+      salary_type,degree, `status`, `desc`, updated_at
       )
     values (#{title,jdbcType=VARCHAR}, #{created_at,jdbcType=TIMESTAMP}, #{unit_name,jdbcType=VARCHAR}, 
-      #{salary_type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR}
+      #{salary_type,jdbcType=INTEGER},#{degree_type,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR},#{updated_at,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hengfeng.web.table.JobInfo" useGeneratedKeys="true">
@@ -47,11 +49,17 @@
       <if test="created_at != null">
         created_at,
       </if>
+      <if test="updated_at != null">
+        updated_at,
+      </if>
       <if test="unit_name != null">
         unit_name,
       </if>
       <if test="salary_type != null">
         salary_type,
+      </if>
+      <if test="degree_type != null">
+        degree_type,
       </if>
       <if test="status != null">
         `status`,
@@ -67,11 +75,17 @@
       <if test="created_at != null">
         #{created_at,jdbcType=TIMESTAMP},
       </if>
+      <if test="updated_at != null">
+        #{updated_at,jdbcType=TIMESTAMP},
+      </if>
       <if test="unit_name != null">
         #{unit_name,jdbcType=VARCHAR},
       </if>
       <if test="salary_type != null">
         #{salary_type,jdbcType=INTEGER},
+      </if>
+      <if test="degree_type != null">
+        #{degree_type,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -90,11 +104,17 @@
       <if test="created_at != null">
         created_at = #{created_at,jdbcType=TIMESTAMP},
       </if>
+      <if test="updated_at != null">
+        updated_at = #{created_at,jdbcType=TIMESTAMP},
+      </if>
       <if test="unit_name != null">
         unit_name = #{unit_name,jdbcType=VARCHAR},
       </if>
       <if test="salary_type != null">
         salary_type = #{salary_type,jdbcType=INTEGER},
+      </if>
+      <if test="degree_type != null">
+        degree_type = #{degree_type,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
@@ -109,8 +129,10 @@
     update job_info
     set title = #{title,jdbcType=VARCHAR},
       created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP},
       unit_name = #{unit_name,jdbcType=VARCHAR},
       salary_type = #{salary_type,jdbcType=INTEGER},
+      degree_type = #{degree_type,jdbcType=INTEGER},
       `status` = #{status,jdbcType=TINYINT},
       `desc` = #{desc,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -119,8 +141,10 @@
     update job_info
     set title = #{title,jdbcType=VARCHAR},
       created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP},
       unit_name = #{unit_name,jdbcType=VARCHAR},
       salary_type = #{salary_type,jdbcType=INTEGER},
+      degree_type = #{degree_type,jdbcType=INTEGER},
       `status` = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>

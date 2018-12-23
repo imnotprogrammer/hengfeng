@@ -1,5 +1,11 @@
 package com.hengfeng.web.table;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +19,9 @@ public class JobInfo implements Serializable {
     /**
      * 标题
      */
+    @NotBlank(message="标题不能为空")
+    @Length(min = 1, max = 10)
+    @NotEmpty(message = "职位名称不能为空")
     private String title;
 
     /**
@@ -20,16 +29,31 @@ public class JobInfo implements Serializable {
      */
     private Date created_at;
 
+
+
     /**
-     * 创建时间
+     * 更新时间
      */
+    private Date updated_at;
+
+    /**
+     * 单位名称
+     */
+    @NotBlank(message = "单位名称不能为空")
+    @NotEmpty(message = "单位名称不能为空")
     private String unit_name;
 
     /**
      * 薪资级别
      */
+    @NotNull(message = "请填写薪资级别")
     private Integer salary_type;
 
+    /**
+     * 学历类型
+     */
+    @NotNull(message = "请填写学历类型")
+    private Integer degree_type;
     /**
      * 0 上线 1 下线
      */
@@ -38,6 +62,7 @@ public class JobInfo implements Serializable {
     /**
      * 岗位说明
      */
+    @NotBlank(message = "请填写岗位介绍")
     private String desc;
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +81,13 @@ public class JobInfo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
     public Date getCreated_at() {
@@ -97,7 +129,13 @@ public class JobInfo implements Serializable {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+    public Integer getDegree_type() {
+        return degree_type;
+    }
 
+    public void setDegree_type(Integer degree_type) {
+        this.degree_type = degree_type;
+    }
     @Override
     public boolean equals(Object that) {
         if (this == that) {

@@ -1,31 +1,24 @@
-package com.hengfeng.web.controller;
+package com.hengfeng.web.controller.admin;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.hengfeng.web.utils.ErrorBusinessEnum;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import com.hengfeng.web.utils.ApiResponse;
 import com.hengfeng.web.utils.BusinessException;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 基础控制器类
  * @author yuguo.lan
  *
  */
+
 public class BaseController {
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	@InitBinder
@@ -59,5 +52,4 @@ public class BaseController {
 		}
 		return response.createResponse(map, "fail");
 	}
-
 }

@@ -2,12 +2,11 @@ package com.hengfeng.web.controller;
 
 import javax.annotation.Resource;
 
+import com.hengfeng.web.controller.admin.BaseController;
 import com.hengfeng.web.table.User;
 import com.hengfeng.web.utils.BusinessException;
 import com.hengfeng.web.utils.ErrorBusinessEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ import com.hengfeng.web.service.UserService;
 import com.hengfeng.web.utils.ApiResponse;
 
 @Controller
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 	@Resource
 	private UserService userService;
 	

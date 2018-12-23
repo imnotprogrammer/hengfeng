@@ -44,7 +44,24 @@ public class JobSearch extends CommonSearch implements Serializable {
      */
     private String sort = "desc";
 
+    public Integer getPage() {
+        return page;
+    }
 
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getPagesize() {
+        return pagesize;
+    }
+
+    public void setPagesize(Integer pagesize) {
+        this.pagesize = pagesize;
+    }
+
+    private Integer page = 1;
+    private Integer pagesize = 10;
     private static final long serialVersionUID = 1L;
 
 

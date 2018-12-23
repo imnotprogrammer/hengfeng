@@ -1,19 +1,19 @@
 package com.hengfeng.web.controller.admin;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.hengfeng.web.controller.BaseController;
 import com.hengfeng.web.search.JobSearch;
 import com.hengfeng.web.service.JobInfoService;
 import com.hengfeng.web.table.JobInfo;
@@ -24,19 +24,22 @@ import com.hengfeng.web.utils.ErrorBusinessEnum;
 @Controller
 public class JobController extends BaseController {
 
+	private String prefix = "/admin/job/";
 	@Resource
 	private JobInfoService jobService;
 	
-	@RequestMapping(value = "/job/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/job/index", method = RequestMethod.GET)
 	@ResponseBody
-	public ApiResponse index(JobSearch jobSearch) 
+	public ApiResponse index(JobSearch jobSearch)
 	{
+		PageHelper.startPage(jobSearch.getPage(), jobSearch.getPagesize());
 		Object obj = jobSearch.setDefautValues();
 		if (obj instanceof String) {
 			return ApiResponse.createResponse(obj, "fail");
 		}
 		JobSearch job = (JobSearch) obj;
-		List<JobInfo> jobList = jobService.selectJobList(job);
+		PageInfo<JobInfo> jobList = new PageInfo<>(jobService.selectJobList(job));
+
 		return ApiResponse.createResponse(jobList);
 	}
 	@RequestMapping(value = "/job/details", method = RequestMethod.GET)
@@ -55,5 +58,25 @@ public class JobController extends BaseController {
 		}
 		
 		return ApiResponse.createResponse(jobInfo);
+	}
+	@RequestMapping(value = "/admin/job/add", method = RequestMethod.POST)
+	@ResponseBody
+	public ApiResponse add(@RequestParam(name = "title", defaultValue = "")String title,
+						   @RequestParam(name = "unit_name", defaultValue = "")String unit_name,
+						   @RequestParam(name = "salary_type", defaultValue = "")Integer salary_type,
+						   @RequestParam(name = "desc", defaultValue = "")String desc) throws BusinessException
+	{
+		JobInfo jobInfo = new JobInfo();
+		jobInfo.setSalary_type(salary_type);
+		jobInfo.setTitle(title);
+		jobInfo.setUnit_name(unit_name);
+		jobInfo.setDesc(desc);
+		return ApiResponse.createResponse(jobService.addJobInfo(jobInfo));
+	}
+	@RequestMapping(value = "/admin/job/add", method = RequestMethod.GET)
+	public String addjob()
+	{
+		//jobInfo = jobService.addJobInfo(jobInfo);
+		return prefix + "addjob";
 	}
 }

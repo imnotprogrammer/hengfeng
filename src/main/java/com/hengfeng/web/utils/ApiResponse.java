@@ -1,5 +1,8 @@
 package com.hengfeng.web.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 接口全局统一返回类
  * @author Administrator
@@ -29,7 +32,15 @@ public class ApiResponse {
 		response.setStatus("ok");
 		return response;
 	}
-	
+	public static Map<String, Object> createDataResponse(Object data, Integer count)
+	{
+		Map<String, Object> object = new HashMap<>();
+		object.put("code", 0);
+		object.put("msg", "");
+		object.put("data", data);
+		object.put("count", count);
+		return object;
+	}
 	public static ApiResponse createResponse(Object object, String status)
 	{
 		ApiResponse response = new ApiResponse();
@@ -38,6 +49,7 @@ public class ApiResponse {
 		response.setStatus(status);
 		return response;
 	}
+
 	
 	public static ApiResponse createResponse(Object object, String status, String message)
 	{
