@@ -25,12 +25,12 @@ spring:
         maxOpenPreparedStatements: 20
     resources:
       static-locations: classpath:/templates/,classpath:/static/
-  #thymeleaf:
+    thymeleaf:
         #prefix: classpath:/views/admin
         #suffix: .html
         #mode: LEGACYHTML5
         #encoding: UTF-8
-        #cache: false
+      #cache: false
 mybatis:
      mapperLocations: classpath:mapper/*.xml
      configLocations: classpath:resources/mybatis.xml

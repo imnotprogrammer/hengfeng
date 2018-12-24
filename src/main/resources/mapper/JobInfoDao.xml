@@ -11,6 +11,25 @@
     <result column="updated_at" jdbcType="TIMESTAMP" property="updated_at" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
+  <resultMap id="ResultMap" type="com.hengfeng.web.table.JobInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unit_name" />
+    <result column="salary_type" jdbcType="INTEGER" property="salary_type" />
+    <result column="degree_type" jdbcType="INTEGER" property="salary_type" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updated_at" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+    <!--<collection property="type" ofType="com.hengfeng.web.table.type">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+    </collection>
+    <collection property="type" ofType="com.hengfeng.web.table.type">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+    </collection-->
+  </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hengfeng.web.table.JobInfo">
     <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
   </resultMap>

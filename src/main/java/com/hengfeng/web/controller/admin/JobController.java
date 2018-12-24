@@ -28,7 +28,7 @@ public class JobController extends BaseController {
 	@Resource
 	private JobInfoService jobService;
 	
-	@RequestMapping(value = "/admin/job/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/job/listData", method = RequestMethod.GET)
 	@ResponseBody
 	public ApiResponse index(JobSearch jobSearch)
 	{
@@ -39,8 +39,14 @@ public class JobController extends BaseController {
 		}
 		JobSearch job = (JobSearch) obj;
 		PageInfo<JobInfo> jobList = new PageInfo<>(jobService.selectJobList(job));
-
+		for (JobInfo jobInfo:jobList.getList()) {
+		}
 		return ApiResponse.createResponse(jobList);
+	}
+	@RequestMapping(value = "/admin/job/index", method = RequestMethod.GET)
+	public String  index()
+	{
+		return prefix + "joblist";
 	}
 	@RequestMapping(value = "/job/details", method = RequestMethod.GET)
 	@ResponseBody

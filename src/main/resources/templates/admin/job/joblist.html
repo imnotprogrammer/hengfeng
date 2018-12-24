@@ -42,9 +42,9 @@
             </div>
         </div>
     </form>
-    <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="member_add('添加招聘信息','add','800','700')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+    <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="member_add('添加招聘信息','add','800','700')"><i class="layui-icon">&#xe608;</i>添加</button></xblock>
     <table class="layui-table" id="job"></table>
-    <table class="layui-table">
+<!--    <table class="layui-table">
         <thead>
         <tr>
             <th>
@@ -125,7 +125,7 @@
             </td>
         </tr>
         </tbody>
-    </table>
+    </table>-->
 
     <div id="page"></div>
 </div>
@@ -133,30 +133,42 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">上线</a>
 </script>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">删除选中行</button>
+    </div>
+</script>
 <script src="/lib/layui/layui.js" charset="utf-8"></script>
 <script src="/js/x-layui.js" charset="utf-8"></script>
-<script>
+<script type="text/javascript"  th:inline="none">
     layui.use(['laydate','element','laypage','layer', 'table'], function(){
         $ = layui.jquery;//jquery
         laydate = layui.laydate;//日期插件
-        lement = layui.element();//面包导航
+        lement = layui.element;//面包导航
         laypage = layui.laypage;//分页
         layer = layui.layer;//弹出层
-        var table = layui.table;
+        table = layui.table;
 
         table.render({
             elem: '#job'
-            ,url:'/admin/job/index'
+            ,title: "招聘信息列表"
+            ,url:'/admin/job/listData'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-                //,curr: 5 //设定初始在第 5 页
+                ,curr: 1 //设定初始在第 5 页
+                ,limit: 10
                 ,groups: 1 //只显示 1 个连续页码
                 ,first: false //不显示首页
                 ,last: false //不显示尾页
 
+            },
+            request:{
+                pageName: 'page' //页码的参数名称，默认：page
+                ,limitName: 'pagesize' //每页数据量的参数名，默认：limit
             }
             ,cols: [[
-                {field:'id',title: 'ID', sort: true}
+                {type:'checkbox'}
+                ,{field:'id',title: 'ID', sort: true}
                 ,{field:'title', title: '职位名称'}
                 ,{field:'salary_type', title: '薪酬类别', sort: true}
                 ,{field:'degree_type', title: '学历要求'}
@@ -177,44 +189,34 @@
                 statusCode: "ok" //规定成功的状态码，默认：0
             }
         });
-        //以上模块根据需要引入
-
-        laypage({
-            cont: 'page'
-            ,pages: 100
-            ,first: 1
-            ,last: 100
-            ,prev: '<em><</em>'
-            ,next: '<em>></em>'
+        //头工具栏事件
+        table.on('toolbar(job)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            };
         });
+        //监听行单击事件（单击事件为：rowDouble）
+        table.on('row(job)', function(obj){
+            var data = obj.data;
 
-        var start = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
+            layer.alert(JSON.stringify(data), {
+                title: '当前行数据：'
+            });
 
-        var end = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-
-        document.getElementById('LAY_demorange_s').onclick = function(){
-            start.elem = this;
-            laydate(start);
-        }
-        document.getElementById('LAY_demorange_e').onclick = function(){
-            end.elem = this
-            laydate(end);
-        }
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
 
     });
 
@@ -222,6 +224,8 @@
     function delAll () {
         layer.confirm('确认要删除吗？',function(index){
             //捉到所有被选中的，发异步进行删除
+            status = table.checkStatus('job');
+            status.data();
             layer.msg('删除成功', {icon: 1});
         });
     }
@@ -257,7 +261,7 @@
     }
     // 用户-编辑
     function member_edit (title,url,id,w,h) {
-        x_admin_show(title,url,w,h);
+        x_admin_show(title,url,id,w,h);
     }
     /*密码-修改*/
     function member_password(title,url,id,w,h){
