@@ -9,10 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.hengfeng.web.search.JobSearch;
 import com.hengfeng.web.service.JobInfoService;
@@ -80,9 +78,13 @@ public class JobController extends BaseController {
 		return ApiResponse.createResponse(jobService.addJobInfo(jobInfo));
 	}
 	@RequestMapping(value = "/admin/job/add", method = RequestMethod.GET)
-	public String addjob()
+	public String addjob(@PathVariable Integer id, Model model)
 	{
 		//jobInfo = jobService.addJobInfo(jobInfo);
+		if (id != null) {
+			JobInfo job = jobService.selectJobById(id);
+			model.addAttribute("job", job);
+		}
 		return prefix + "addjob";
 	}
 }

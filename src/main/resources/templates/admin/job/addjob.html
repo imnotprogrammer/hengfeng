@@ -23,10 +23,10 @@
                 职位名称
             </label>
             <div class="layui-input-block">
-                <input type="text" id="L_title" name="title" required lay-verify="title" autocomplete="off" class="layui-input">
+                <input type="text" id="L_title" value="${job.title}" name="title" required lay-verify="title" autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label for="L_UNIT_NAME" class="layui-form-label">
                 公司(企业)名称
             </label>
@@ -34,13 +34,13 @@
                 <input type="text" id="L_UNIT_NAME" name="unit_name" required lay-verify="title"
                        autocomplete="off" class="layui-input">
             </div>
-        </div>
+        </div>-->
         <div class="layui-form-item layui-form-text">
             <label for="L_title" class="layui-form-label">
                 岗位要求(描述)
             </label>
             <div class="layui-input-block">
-                <textarea id="L_content" name="desc" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+                <textarea id="L_content" name="desc" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;">${job.desc}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
